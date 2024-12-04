@@ -1,7 +1,7 @@
 import { AssetType } from "../types/assetType";
 import axios from "axios";
 
-const baseUrl = "http://ec2-54-91-215-149.compute-1.amazonaws.com/api";
+const baseUrl = import.meta.env.VITE_BASE_URL || "";
 
 const getItensByType = async (type: AssetType) => {
   const response = await axios.post(`${baseUrl}/query/search`,
@@ -14,8 +14,8 @@ const getItensByType = async (type: AssetType) => {
     },
     {
       auth: {
-        username: "psAdmin",
-        password: "goledger",
+        username: import.meta.env.VITE_USERNAME || "",
+        password: import.meta.env.VITE_PASSWORD || "",
       },
     }
   );
