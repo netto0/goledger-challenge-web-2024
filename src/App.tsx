@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { AssetListsContext } from "./providers/assetLists";
 
 function App() {
   const {getArtists, artists} = React.useContext(AssetListsContext)
   
-  getArtists()
+  // 
+  useEffect(() => {getArtists()},[])
 
   return (
     <>
