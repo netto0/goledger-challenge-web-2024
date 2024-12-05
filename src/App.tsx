@@ -4,7 +4,7 @@ import { AssetListsContext } from "./providers/assetLists";
 import { getOneItem } from "./api/axios";
 
 function App() {
-  const {getArtists, artists, getSongs, songs} = React.useContext(AssetListsContext)
+  const {getArtists, artists, getSongs, songs, getAlbums, albums} = React.useContext(AssetListsContext)
   const [artist,setArtist] = useState({})
   const [song,setSong] = useState("")
   
@@ -13,7 +13,7 @@ function App() {
     setArtist(response)
   }
 
-  useEffect(() => {getArtists(), getSongs()},[])
+  useEffect(() => {getArtists(), getSongs(), getAlbums()},[])
 
   return (
     <>
@@ -29,8 +29,12 @@ function App() {
           {song.name} - {JSON.stringify(song.album)} - {song["@key"].split(":")[1]}
         </li>
       ))}</p>
-      <h1>Artista</h1>
-      <p>{JSON.stringify(song)}</p>
+      <h1>Álbums</h1>
+      <p>{albums.map((album, index) => (
+        <li key={index}>
+          {album.name} - {album.year} - {JSON.stringify(album.artist)} - {album["@key"].split(":")[1]}
+        </li>
+      ))}</p>
     </>
   );
 }
