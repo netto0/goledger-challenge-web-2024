@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { AssetListsContext } from "./providers/assetLists";
-import { getOneItem } from "./api/axios";
 
 function App() {
-  const {getArtists, artists, getSongs, songs, getAlbums, albums} = React.useContext(AssetListsContext)
-  const [artist,setArtist] = useState({})
-  const [song,setSong] = useState("")
+  const {getArtists, artists, getSongs, songs, getAlbums, albums, getPlaylists, playlists} = React.useContext(AssetListsContext)
   
-  const getOneArtist = async () => {
-    const response = await getOneItem("artist","Annita")
-    setArtist(response)
-  }
-
-  useEffect(() => {getArtists(), getSongs(), getAlbums()},[])
+  useEffect(() => {getArtists(), getSongs(), getAlbums(), getPlaylists()},[])
 
   return (
     <>
@@ -33,6 +25,12 @@ function App() {
       <p>{albums.map((album, index) => (
         <li key={index}>
           {album.name} - {album.year} - {JSON.stringify(album.artist)} - {album["@key"].split(":")[1]}
+        </li>
+      ))}</p>
+      <h1>Playlists</h1>
+      <p>{playlists.map((playlist, index) => (
+        <li key={index}>
+          {playlist.name} - {playlist.private? "True" : "False"} - {JSON.stringify(playlist.songs)} - {playlist["@key"].split(":")[1]}
         </li>
       ))}</p>
     </>
