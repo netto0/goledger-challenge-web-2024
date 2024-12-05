@@ -25,23 +25,5 @@ const getItensByType = async (type: AssetType) => {
   return response.data.result;
 };
 
-const getOneItem = async (assetType: AssetType, key: string ) => {
-  try {
-    const response = await axios.post(`${baseUrl}/query/readAsset`, {
-      key: {
-        "@assetType": assetType,
-        "@key": key,
-      },
-    }, {auth: authPayload});
-    return(response.data);
-  } catch (error) {
-    console.log(error)
-    if (error instanceof AxiosError && error.response) {
-      return error.response.data;
-    } else {
-      return error
-    }
-  }
-};
 
-export { getItensByType, getOneItem };
+export { getItensByType };
