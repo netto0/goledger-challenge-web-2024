@@ -4,6 +4,7 @@ import { AssetListsContext } from "./providers/assetLists";
 import { addArtistService } from "./api/services/artistServices";
 import { addSongService } from "./api/services/songServices";
 import { addAlbumService } from "./api/services/albumServices";
+import { addPlaylistService } from "./api/services/playlistServices";
 
 
 
@@ -13,6 +14,7 @@ function App() {
   const [newArtistObj, setNewArtistObj] = useState({name: "", country: ""})
   const [newSongObj, setNewSongObj] = useState({name: "", albumKey: ""})
   const [newAlbumObj, setNewAlbumObj] = useState({name: "", year: "", artistKey:""})
+  const [newPlaylistObj, setNewPlaylistObj] = useState({name: "", privPlaylist: false, songsArray: ""})
 
   useEffect(() => {getArtists(), getSongs(), getAlbums(), getPlaylists()},[])
 
@@ -76,9 +78,25 @@ function App() {
         <input type="text" placeholder="Digite a chave do artista..." name="artistKey" id="arKey" className="bg-red-300" value={newAlbumObj.artistKey} onChange={(e) => setNewAlbumObj({...newAlbumObj, artistKey: e.target.value})}/>
         <br />
         <button className="bg-blue-200" onClick={() => addAlbumService(newAlbumObj.name, parseInt(newAlbumObj.year), newAlbumObj.artistKey)}>Enviar</button>
+        <br />
+
+        <h1>Nova playlist</h1>
+        <h2>Nome: {newPlaylistObj.name}</h2>
+        <h2>Private?: {newPlaylistObj.privPlaylist ? "True" : "False"}</h2>
+        <h2>Array de músicas: {newPlaylistObj.songsArray}</h2>
+        <input type="text" placeholder="Digite o nome..." name="playlistName" id="pName" className="bg-red-300" value={newPlaylistObj.name} onChange={(e) => setNewPlaylistObj({...newPlaylistObj, name: e.target.value})}/>
+        <br />
+        <label htmlFor="privPL">Private?</label>
+        <input type="checkbox" name="privPL" id="privPL" checked={newPlaylistObj.privPlaylist} onChange={() => setNewPlaylistObj({...newPlaylistObj, privPlaylist: !newPlaylistObj.privPlaylist})}/>
+        <br />
+        <input type="text" placeholder="Insira a lista de músicas..." name="songsArray" id="sArray" className="bg-red-300" value={newPlaylistObj.songsArray} onChange={(e) => setNewPlaylistObj({...newPlaylistObj, songsArray: e.target.value})}/>
+        <br />
+        <button className="bg-blue-200" onClick={() => addPlaylistService(newPlaylistObj.name, newPlaylistObj.privPlaylist, JSON.parse(newPlaylistObj.songsArray))}>Enviar</button>
       </div>
     </div>
   );
 }
 
 export default App;
+
+// [{"@key": "song:21fb21f9-bca2-5734-9c7d-9a9b3d989cd7"}, {"@key": "song:229816cc-8f4c-51c1-9c0f-2375c6d51375"}, {"@key": "song:2545d178-4ab1-582a-a93f-b049fe279ff0"}]
