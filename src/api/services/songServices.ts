@@ -1,5 +1,5 @@
-import { AxiosError } from "axios";
-import { getItensByType } from "../axios";
+import axios, { AxiosError } from "axios";
+import { authPayload, baseUrl, getItensByType } from "../axios";
 
 const getSongsService = async () => {
     try {
@@ -12,4 +12,26 @@ const getSongsService = async () => {
     }
   };
 
-export {getSongsService}
+  const addSongService = async (name: string, albumKey: string) => {
+    try {
+      const response = await axios.post(`${baseUrl}/invoke/createAsset`, {
+        asset: [
+          {
+            "@assetType": "song",
+            name: name,
+            album: {"@key": albumKey},
+          },
+        ],
+      }, 
+      {
+        auth: authPayload,
+      });
+      return response;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return error.response.data;
+      }
+    }
+  };
+
+export {getSongsService, addSongService}

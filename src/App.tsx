@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { AssetListsContext } from "./providers/assetLists";
 import { addArtistService } from "./api/services/artistServices";
+import { addSongService } from "./api/services/songServices";
 
 
 
 function App() {
   const {getArtists, artists, getSongs, songs, getAlbums, albums, getPlaylists, playlists} = React.useContext(AssetListsContext)
 
-  
-  const [newArtistName, setNewArtistName] = useState("")  
-  const [newArtistCountry, setNewArtistCountry] = useState("")  
+  const [newArtistObj, setNewArtistObj] = useState({name: "", country: ""})
+  const [newSongObj, setNewSongObj] = useState({name: "", albumKey: ""})
+
   useEffect(() => {getArtists(), getSongs(), getAlbums(), getPlaylists()},[])
 
   return (
@@ -43,13 +44,23 @@ function App() {
       </div>
       <div className="border border-black w-1/2">
         <h1>Novo Artista</h1>
-        <h2>Nome: {newArtistName}</h2>
-        <h2>País: {newArtistCountry}</h2>
-        <input type="text" placeholder="Digite o nome..." name="artistName" id="aName" className="bg-red-300" value={newArtistName} onChange={(e) => setNewArtistName(e.target.value)}/>
+        <h2>Nome: {newArtistObj.name}</h2>
+        <h2>País: {newArtistObj.country}</h2>
+        <input type="text" placeholder="Digite o nome..." name="artistName" id="aName" className="bg-red-300" value={newArtistObj.name} onChange={(e) => setNewArtistObj({...newArtistObj, name: e.target.value})}/>
         <br />
-        <input type="text" placeholder="Digite o país..." name="artistName" id="aName" className="bg-red-300" value={newArtistCountry} onChange={(e) => setNewArtistCountry(e.target.value)}/>
+        <input type="text" placeholder="Digite o país..." name="artistCountry" id="aCountry" className="bg-red-300" value={newArtistObj.country} onChange={(e) => setNewArtistObj({...newArtistObj, country: e.target.value})}/>
         <br />
-        <button className="bg-blue-200" onClick={() => addArtistService(newArtistName, newArtistCountry)}>Enviar</button>
+        <button className="bg-blue-200" onClick={() => addArtistService(newArtistObj.name, newArtistObj.country)}>Enviar</button>
+        <br />
+
+        <h1>Nova música</h1>
+        <h2>Nome: {newSongObj.name}</h2>
+        <h2>Chave do Álbum: {newSongObj.albumKey}</h2>
+        <input type="text" placeholder="Digite o nome..." name="songName" id="sName" className="bg-red-300" value={newSongObj.name} onChange={(e) => setNewSongObj({...newSongObj, name: e.target.value})}/>
+        <br />
+        <input type="text" placeholder="Digite a chave do album..." name="albumKey" id="alKey" className="bg-red-300" value={newSongObj.albumKey} onChange={(e) => setNewSongObj({...newSongObj, albumKey: e.target.value})}/>
+        <br />
+        <button className="bg-blue-200" onClick={() => addSongService(newSongObj.name, newSongObj.albumKey)}>Enviar</button>
       </div>
     </div>
   );
