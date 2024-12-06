@@ -26,4 +26,4 @@ const getItensByType = async (type: AssetType) => {
 };
 
 
-export { getItensByType };
+export { getItensByType, baseUrl, authPayload };
