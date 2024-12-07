@@ -116,6 +116,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
       formatedArray.push({
         name: playlist.name,
         private: playlist.private,
+        songs: JSON.stringify(playlist.songs),
         key: playlist["@key"]
       });
     });

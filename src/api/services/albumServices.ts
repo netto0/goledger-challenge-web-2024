@@ -12,7 +12,11 @@ const getAlbumsService = async () => {
   }
 };
 
-const addAlbumService = async (name: string, year: number, artistKey: string) => {
+const addAlbumService = async (
+  name: string,
+  year: number,
+  artistKey: string
+) => {
   try {
     const response = await axios.post(
       `${baseUrl}/invoke/createAsset`,
@@ -22,7 +26,7 @@ const addAlbumService = async (name: string, year: number, artistKey: string) =>
             "@assetType": "album",
             name: name,
             year: year,
-            artist: {"@key": artistKey },
+            artist: { "@key": artistKey },
           },
         ],
       },
@@ -30,7 +34,7 @@ const addAlbumService = async (name: string, year: number, artistKey: string) =>
         auth: authPayload,
       }
     );
-    console.log("Álbum criado!")
+    console.log("Álbum criado!");
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -38,4 +42,28 @@ const addAlbumService = async (name: string, year: number, artistKey: string) =>
     }
   }
 };
-export { getAlbumsService, addAlbumService };
+
+const updateAlbumService = async (key: string, year: number) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/invoke/updateAsset`,
+      {
+        update: {
+          "@assetType": "album",
+          "@key": key,
+          year: year,
+        },
+      },
+      {
+        auth: authPayload,
+      }
+    );
+    return response;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      return error.response.data;
+    }
+  }
+};
+
+export { getAlbumsService, addAlbumService, updateAlbumService };

@@ -18,7 +18,7 @@ const getPlaylistsService = async () => {
 
 const addPlaylistService = async (
   name: string,
-  privPlaylist: boolean,
+  isPrivate: boolean,
   songsArray: SongObject[]
 ) => {
   try {
@@ -29,7 +29,7 @@ const addPlaylistService = async (
           {
             "@assetType": "playlist",
             name: name,
-            private: privPlaylist,
+            private: isPrivate,
             songs: songsArray,
           },
         ],
@@ -47,4 +47,28 @@ const addPlaylistService = async (
   }
 };
 
-export { getPlaylistsService, addPlaylistService };
+const updatePlaylistService = async (key: string, isPrivate: boolean, songsArray: string) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/invoke/updateAsset`,
+      {
+        update: {
+          "@assetType": "playlist",
+          "@key": key,
+          private: isPrivate,
+          songs: songsArray
+        },
+      },
+      {
+        auth: authPayload,
+      }
+    );
+    return response;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      return error.response.data;
+    }
+  }
+};
+
+export { getPlaylistsService, addPlaylistService, updatePlaylistService };
