@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { AssetListsContext } from "./providers/assetLists";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const {getArtists, getSongs, getAlbums, getPlaylists} = React.useContext(AssetListsContext)
@@ -10,7 +11,9 @@ function App() {
   return (
     <div id="masterDiv" className="grid grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen">
       <div id="leftBar" className="bg-red-500 flex flex-col w-full h-full ">
-        <div id="searchBarDiv" className="border flex border-gray-700 w-full h-[10%] p-2 items-center justify-center">SEARCH BAR</div>
+        <div id="searchBarDiv" className="border flex border-gray-700 w-full h-[10%] px-5 py-2 items-center justify-center">
+          <SearchBar />
+        </div>
         <div id="menuDiv" className="border flex flex-col border-gray-700 w-full h-[30%] p-2">
           <strong>Menu</strong>
           <ul>
