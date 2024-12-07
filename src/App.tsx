@@ -5,6 +5,7 @@ import SearchBar from "./components/SearchBar";
 import PagesMenu from "./components/PagesMenu";
 import PlaylistsPreview from "./components/PlaylistsPreview";
 import UserInfos from "./components/UserInfos";
+import SugestedArtists from "./components/SugestedArtists";
 
 function App() {
   const {getArtists, getSongs, getAlbums, getPlaylists} = React.useContext(AssetListsContext)
@@ -40,16 +41,7 @@ function App() {
           <UserInfos />
         </div>
         <div id="sugestedArtistsDiv" className="border flex flex-col border-gray-700 w-full h-[90%] p-2">
-          <strong>Artistas sugeridos</strong>
-          <ul>
-            <li>Artista</li>
-            <li>Artista</li>
-            <li>Artista</li>
-            <li>Artista</li>
-            <li>Artista</li>
-            <li>Artista</li>
-          </ul>
-
+          <SugestedArtists />
         </div>
       </div>
     </div>

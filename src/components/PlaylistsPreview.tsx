@@ -27,7 +27,7 @@ export default function PlaylistsPreview() {
             {randomArray.map((number, index) => (
               <li key={index} className="w-full">
                 <a href="" className="flex h-14 items-center justify-between w-full">
-                  <h3 className="text-2xl overflow-hidden text-ellipsis whitespace-nowrap max-w-60">
+                  <h3 title= {playlists[number] != undefined && playlists[number].name} className="text-2xl overflow-hidden text-ellipsis whitespace-nowrap max-w-60">
                     {playlists[number] != undefined && playlists[number].name}
                   </h3>
                   <span>
