@@ -46,7 +46,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [artistKey, setArtistKey] = useState("artist:87cad9f0-70ed-5eca-ac1e-837e899db13f");
+  const [artistKey, setArtistKey] = useState("artist:af38178b-48d6-5919-a45b-37b07fc8ebb2");
 
   const getArtists = async () => {
     setLoading(true);

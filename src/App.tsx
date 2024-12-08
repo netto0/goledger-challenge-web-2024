@@ -37,7 +37,7 @@ function App() {
         </div>
         <div
           id="menuDiv"
-          className="border flex flex-col border-gray-700 w-full h-[30%] px-5 py-2"
+          className="border flex flex-col border-gray-700 w-full h-[35%] px-5 py-2"
         >
           <PagesMenu />
         </div>
@@ -49,6 +49,7 @@ function App() {
         </div>
       </div>
       <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-full">
+        
         <ArtistPage />
       </div>
       <div id="rightBar" className="bg-blue-500 w-full h-full">

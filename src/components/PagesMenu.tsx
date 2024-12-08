@@ -1,6 +1,7 @@
 import { BsPersonFill } from "react-icons/bs";
 import { PiMusicNotesFill } from "react-icons/pi";
 import { IoIosAlbums } from "react-icons/io";
+import { FaThList } from "react-icons/fa";
 
 export default function PagesMenu() {
   
@@ -11,6 +12,7 @@ export default function PagesMenu() {
         <li><a href="" className="flex items-center text-3xl gap-2 hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"><BsPersonFill />Artistas</a></li>
         <li><a href="" className="flex items-center text-3xl gap-2 hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"><PiMusicNotesFill />Músicas</a></li>
         <li><a href="" className="flex items-center text-3xl gap-2 hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"><IoIosAlbums />Álbums</a></li>
+        <li><a href="" className="flex items-center text-3xl gap-2 hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"><FaThList />Playlists</a></li>
       </ul>
     </div>
   );
