@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { getArtistsService } from "../api/services/artistServices";
 import { getSongsService } from "../api/services/songServices";
 import { getAlbumsService } from "../api/services/albumServices";
@@ -20,6 +20,10 @@ interface AssetListsContextType {
   getArtistAlbums: (key: string, returnSongs?: boolean) => any;
   artistKey: string;
   setArtistKey: React.Dispatch<React.SetStateAction<string>>;
+  artistInfos: {};
+  setArtistInfos: React.Dispatch<
+    SetStateAction<{ name: string; songs: never[] }>
+  >;
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -37,7 +41,9 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   getAlbumSongs: () => [],
   getArtistAlbums: () => [],
   artistKey: "",
-  setArtistKey: () => {}
+  setArtistKey: () => {},
+  artistInfos: { name: "", songs: [] },
+  setArtistInfos: () => {},
 });
 
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
@@ -46,7 +52,15 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [artistKey, setArtistKey] = useState("artist:af38178b-48d6-5919-a45b-37b07fc8ebb2");
+  const [artistKey, setArtistKey] = useState("");
+  const [artistInfos, setArtistInfos] = useState({ name: "", songs: [] });
+
+  useEffect(() => {
+    setArtistInfos({
+      name: getAssetInfos(artistKey),
+      songs: getArtistAlbums(artistKey, true),
+    });
+  }, [artistKey]);
 
   const getArtists = async () => {
     setLoading(true);
@@ -141,7 +155,8 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         selectedArray.forEach((item) => {
           if (item && item.key == key) {
             assetItemInfos[0] = item.name || "Nao encontrado";
-            assetItemInfos[1] = getAssetInfos(item.albumKey) || "Album Nao encontrado";
+            assetItemInfos[1] =
+              getAssetInfos(item.albumKey) || "Album Nao encontrado";
           }
         });
       return assetItemInfos || "Item nao encontrado";
@@ -223,7 +238,9 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         getAlbumSongs,
         getArtistAlbums,
         artistKey,
-        setArtistKey
+        setArtistKey,
+        artistInfos,
+        setArtistInfos,
       }}
     >
       {props.children}

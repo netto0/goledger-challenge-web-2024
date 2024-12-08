@@ -1,5 +1,6 @@
 import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
+import { Link } from "react-router-dom";
 
 export default function AllArtistsPage() {
   const { getArtistAlbums, artistKey, artists, setArtistKey } =
@@ -7,7 +8,8 @@ export default function AllArtistsPage() {
 
   const artistSongs = getArtistAlbums(artistKey, true);
 
-  const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
+  const handleItemClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    console.log("eu fui")
     const artistKey = e.currentTarget.getAttribute('artist-key') || "Inválido";
     setArtistKey(artistKey)
   };
@@ -32,7 +34,7 @@ export default function AllArtistsPage() {
             </h3>
           )}
           {artists.map((artist, index) => (
-              <li artist-key={artist.key} key={index} className="w-full text-2xl border-b  border-gray-400 hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" onClick={handleItemClick} value={artist.key}>
+              <Link to="/artist" artist-key={artist.key} key={index} className="w-full text-2xl border-b  border-gray-400 hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" onClick={e => handleItemClick(e)}>
                 <div
                   className="flex h-20 items-center w-full"
                 >
@@ -45,7 +47,7 @@ export default function AllArtistsPage() {
                   <span className="flex h-full items-center w-[30%]">{artist?.country}</span>
                   <span className="flex h-full items-center justify-end w-[20%] text-lg pr-3">{getArtistAlbums(artist?.key, true).length} músicas</span>
                 </div>
-              </li>
+              </Link>
             ))}
         </ul>
       </div>

@@ -7,12 +7,12 @@ import PlaylistsPreview from "./components/PlaylistsPreview";
 import UserInfos from "./components/UserInfos";
 import SugestedAlbums from "./components/SugestedAlbums";
 
-// import ArtistPage from "./components/ArtistPage";
 import AllArtistsPage from "./components/AllArtistsPage";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AllAlbumsPage from "./components/AllplaylistsPage";
 import AllSongsPage from "./components/AllSongsPage";
 import AllPlaylistsPage from "./components/AllAlbumsPage";
+import ArtistPage from "./components/ArtistPage";
 // import Tests from "./components/Tests";
 
 function App() {
@@ -58,6 +58,7 @@ function App() {
       <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-screen max-h-screen">
       <Routes>
         <Route path="/" element={<AllArtistsPage />} />
+        <Route path="/artist" element={<ArtistPage />} />
         <Route path="/artists" element={<AllArtistsPage />} />
         <Route path="/albums" element={<AllAlbumsPage />} />
         <Route path="/songs" element={<AllSongsPage />} />
