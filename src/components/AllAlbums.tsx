@@ -11,7 +11,7 @@ export default function AllAlbums() {
     <>
       <h2 className="font-bold text-3xl my-4">Álbums</h2>
         <div className="flex flex-col gap-3 h-[90%] max-h-[90%]">
-          <ul className="scrollable-div flex flex-col gap-2 pl-1 w-full overflow-y-auto my-2">
+          <ul className="scrollable-div flex flex-col gap-2 pl-1 w-full overflow-y-auto mt-2 -mb-3">
           {albums.length < 1 && (
             <h3 className="text-2xl">
               Nenhum álbum foi adicionado ainda...
