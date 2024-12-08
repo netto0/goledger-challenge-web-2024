@@ -6,12 +6,12 @@ interface IProps {
   artistKey: string;
 }
 
-export default function SugestedAlbums(props: IProps) {
+export default function AllArtistAlbums(props: IProps) {
   const { getArtistAlbums, getAssetInfos } =
     React.useContext(AssetListsContext);
 
   const artistAlbums = getArtistAlbums(props.artistKey);
-  // console.log(artistAlbums, "eita porra");
+
   return (
     <>
       <h2 className="font-bold text-3xl my-4">Discografia</h2>
@@ -25,7 +25,7 @@ export default function SugestedAlbums(props: IProps) {
             {artistAlbums.length > 0 &&
               artistAlbums.map((album: any, index: any) => (
                 <li key={index} className="w-full">
-                  <a href="" className="flex gap-3 h-20 w-full">
+                  <div className="flex gap-3 h-20 w-full">
                     <img
                       src={albumImg}
                       alt="albumCover"
@@ -40,7 +40,7 @@ export default function SugestedAlbums(props: IProps) {
                       </h3>
                       <span>Album - {getAssetInfos(album)[1]}</span>
                     </div>
-                  </a>
+                  </div>
                 </li>
               ))}
           </ul>
