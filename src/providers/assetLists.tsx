@@ -15,9 +15,9 @@ interface AssetListsContextType {
   getPlaylists: () => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  getAssetInfos: (key:string) => string;
-  getAlbumSongs: (key:string) => any;
-  getArtistAlbums: (key:string) => any;
+  getAssetInfos: (key: string) => string;
+  getAlbumSongs: (key: string) => any;
+  getArtistAlbums: (key: string, returnSongs?: boolean) => any;
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -46,24 +46,24 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const getArtists = async () => {
     setLoading(true);
     const artists = await getArtistsService();
-    let formatedArray:any = [];
-    artists.map((artist:any) => {
+    let formatedArray: any = [];
+    artists.map((artist: any) => {
       formatedArray.push({
         name: artist.name,
         country: artist.country,
-        key: artist["@key"]
+        key: artist["@key"],
       });
     });
 
-    setArtists(formatedArray)
+    setArtists(formatedArray);
     setLoading(false);
   };
 
   const getSongs = async () => {
     setLoading(true);
     const songs = await getSongsService();
-    let formatedArray:any = [];
-    songs.map((song:any) => {
+    let formatedArray: any = [];
+    songs.map((song: any) => {
       formatedArray.push({
         name: song.name,
         albumKey: song.album["@key"],
@@ -71,15 +71,15 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
       });
     });
 
-    setSongs(formatedArray)  
+    setSongs(formatedArray);
     setLoading(false);
   };
 
   const getAlbums = async () => {
     setLoading(true);
     const albums = await getAlbumsService();
-    let formatedArray:any = [];
-    albums.map((album:any) => {
+    let formatedArray: any = [];
+    albums.map((album: any) => {
       formatedArray.push({
         name: album.name,
         artistKey: album.artist["@key"],
@@ -87,58 +87,75 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         key: album["@key"],
       });
     });
-    setAlbums(formatedArray)
+    setAlbums(formatedArray);
     setLoading(false);
   };
 
   const getPlaylists = async () => {
     setLoading(true);
     const playlists = await getPlaylistsService();
-    let formatedArray:any = [];
-    playlists.map((playlist:any) => {
+    let formatedArray: any = [];
+    playlists.map((playlist: any) => {
       formatedArray.push({
         name: playlist.name,
         private: playlist.private,
         songs: JSON.stringify(playlist.songs),
-        key: playlist["@key"]
+        key: playlist["@key"],
       });
     });
-    setPlaylists(formatedArray)
+    setPlaylists(formatedArray);
     setLoading(false);
   };
 
-  const getAssetInfos = (key: string):string => {
+  const getAssetInfos = (key: string): string => {
     const assetType = key?.split(":")[0];
     const selectedArray =
-    assetType === "artist" ? artists :
-    assetType === "album" ? albums :
-    assetType === "song" ? songs :
-    assetType === "playlist" ? playlists : [];
+      assetType === "artist"
+        ? artists
+        : assetType === "album"
+        ? albums
+        : assetType === "song"
+        ? songs
+        : assetType === "playlist"
+        ? playlists
+        : [];
 
     if (assetType == "album") {
-      let assetItemInfos:any = []
-      selectedArray.length > 0 && selectedArray.forEach(item => {
-        if(item && item.key == key) {
-          assetItemInfos[0] = item.name || "Nao encontrado"
-          assetItemInfos[1] = item.year || "Nao encontrado"
-        }
-      })
-      return assetItemInfos || "Item nao encontrado"
+      let assetItemInfos: any = [];
+      selectedArray.length > 0 &&
+        selectedArray.forEach((item) => {
+          if (item && item.key == key) {
+            assetItemInfos[0] = item.name || "Nao encontrado";
+            assetItemInfos[1] = item.year || "Nao encontrado";
+          }
+        });
+      return assetItemInfos || "Item nao encontrado";
+    } else if (assetType == "song") {
+      let assetItemInfos: any = [];
+      selectedArray.length > 0 &&
+        selectedArray.forEach((item) => {
+          if (item && item.key == key) {
+            assetItemInfos[0] = item.name || "Nao encontrado";
+            assetItemInfos[1] = getAssetInfos(item.albumKey) || "Album Nao encontrado";
+          }
+        });
+      return assetItemInfos || "Item nao encontrado";
     } else {
-      let assetItemName = ""
-      selectedArray.length > 0 && selectedArray.forEach(item => {
-        if(item && item.key == key) {
-          assetItemName = item.name || "Nao encontrado"
-        }
-      })
-      return assetItemName || "Item nao encontrado"
+      let assetItemName = "";
+      selectedArray.length > 0 &&
+        selectedArray.forEach((item) => {
+          if (item && item.key == key) {
+            assetItemName = item.name || "Nao encontrado";
+          }
+        });
+      return assetItemName || "Item nao encontrado a";
     }
-  }
-  
+  };
+
   const getAlbumSongs = (key: string) => {
     // console.log("AlbumSongs funcionando")
     const assetType = key.split(":")[0];
-  
+
     if (assetType == "album") {
       // console.log("Tipo Album")
       let albumSongs: any = [];
@@ -151,32 +168,34 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
       return albumSongs;
     }
   };
-  
+
   const getArtistAlbums = (key: string, returnSongs: boolean = false) => {
     console.log("ArtistAlbums funcionando");
     const assetType = key.split(":")[0];
     let artistAlbums: any = [];
     let artistSongs: any = [];
-  
+
     console.log(typeof artistAlbums);
-  
+
     if (assetType == "artist") {
       console.log("Tipo Artist");
       albums.forEach((album) => {
         if (album.artistKey == key) {
-          // console.log(album.albumKey, "=", key, "=", album.albumKey == key ? "True" : "False")
+          const albumSongs = getAlbumSongs(album.key);
           artistAlbums.push(album.key);
-          artistSongs.push(getAlbumSongs(album.key));
+          if (albumSongs.length > 0) {
+            albumSongs.forEach((song: any) => artistSongs.push(song));
+          }
         }
       });
     }
-  
+
     if (returnSongs) {
-      console.log("Retornando músicas")
+      console.log("Retornando músicas");
       console.log(artistSongs);
       return artistSongs;
     } else {
-      console.log("Retornando álbums")
+      console.log("Retornando álbums");
       console.log(artistAlbums);
       return artistAlbums;
     }
@@ -197,7 +216,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         setLoading,
         getAssetInfos,
         getAlbumSongs,
-        getArtistAlbums
+        getArtistAlbums,
       }}
     >
       {props.children}

@@ -7,18 +7,17 @@ import PlaylistsPreview from "./components/PlaylistsPreview";
 import UserInfos from "./components/UserInfos";
 import SugestedAlbums from "./components/SugestedAlbums";
 
+import ArtistPage from "./components/ArtistPage";
+
 function App() {
   const {
     getArtists,
     getSongs,
     getAlbums,
     getPlaylists,
-    getAssetInfos,
   } = React.useContext(AssetListsContext);
 
   const artistKey = "artist:1fc27c52-6075-508d-ad50-92ba7ac334dc";
-
-  const artistName = getAssetInfos(artistKey);
 
   useEffect(() => {
     getArtists(), getSongs(), getAlbums(), getPlaylists();
@@ -50,25 +49,7 @@ function App() {
         </div>
       </div>
       <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-full">
-        {/* ========================================================================== */}
-        <div
-          id="titleDiv"
-          className="border flex flex-col border-gray-700 w-full h-[10%] p-2 justify-center"
-        >
-          <h2 className="text-3xl font-bold">{artistName}</h2>
-        </div>
-        <div
-          id="mainContentDiv"
-          className="border flex flex-col border-gray-700 w-full h-[90%] p-2"
-        >
-          <strong>Músicas</strong>
-          <ul>
-            <li>Musica</li>
-            <li>Musica</li>
-            <li>Musica</li>
-          </ul>
-        </div>
-        {/* ========================================================================== */}
+        <ArtistPage />
       </div>
       <div id="rightBar" className="bg-blue-500 w-full h-full">
         <div
@@ -81,7 +62,7 @@ function App() {
           id="sugestedAlbumsDiv"
           className="border flex flex-col border-gray-700 w-full h-[90%] p-2"
         >
-          <SugestedAlbums artistKey={artistKey}/>
+          <SugestedAlbums artistKey={artistKey} />
         </div>
       </div>
     </div>

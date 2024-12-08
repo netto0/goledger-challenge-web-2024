@@ -28,7 +28,6 @@ export default function SugestedAlbums(props: IProps) {
   return (
     <>
       <h2 className="font-bold text-3xl my-4">Discografia</h2>
-      {
         <div className="h-full flex flex-col gap-3">
           <ul className="flex flex-col gap-2 pl-1 w-full">
             {artistAlbums.length > 0 &&
@@ -62,7 +61,6 @@ export default function SugestedAlbums(props: IProps) {
             </a>
           )}
         </div>
-      }
     </>
   );
 }
