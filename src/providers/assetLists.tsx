@@ -175,15 +175,15 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   };
 
   const getArtistAlbums = (key: string, returnSongs: boolean = false) => {
-    console.log("ArtistAlbums funcionando");
+    // console.log("ArtistAlbums funcionando");
     const assetType = key.split(":")[0];
     let artistAlbums: any = [];
     let artistSongs: any = [];
 
-    console.log(typeof artistAlbums);
+    // console.log(typeof artistAlbums);
 
     if (assetType == "artist") {
-      console.log("Tipo Artist");
+      // console.log("Tipo Artist");
       albums.forEach((album) => {
         if (album.artistKey == key) {
           const albumSongs = getAlbumSongs(album.key);
@@ -196,12 +196,12 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
     }
 
     if (returnSongs) {
-      console.log("Retornando músicas");
-      console.log(artistSongs);
+      // console.log("Retornando músicas");
+      // console.log(artistSongs);
       return artistSongs;
     } else {
-      console.log("Retornando álbums");
-      console.log(artistAlbums);
+      // console.log("Retornando álbums");
+      // console.log(artistAlbums);
       return artistAlbums;
     }
   };

@@ -11,7 +11,7 @@ export default function SugestedAlbums(props: IProps) {
     React.useContext(AssetListsContext);
 
   const artistAlbums = getArtistAlbums(props.artistKey);
-  console.log(artistAlbums, "eita porra");
+  // console.log(artistAlbums, "eita porra");
   return (
     <>
       <h2 className="font-bold text-3xl my-4">Discografia</h2>

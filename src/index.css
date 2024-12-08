@@ -6,3 +6,17 @@ h1 {
     font-size: 2rem;
     font-weight: bold;
 }
+
+/* styles.css */
+.scrollable-div::-webkit-scrollbar {
+    width: 5px;
+  }
+  .scrollable-div::-webkit-scrollbar-thumb {
+    background: #9ca3afb0;
+    border-radius: 4px;
+}
+.scrollable-div::-webkit-scrollbar-track {
+    background: #d3d3d3b0;
+    border-radius: 4px;
+  }
+  

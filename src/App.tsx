@@ -7,7 +7,9 @@ import PlaylistsPreview from "./components/PlaylistsPreview";
 import UserInfos from "./components/UserInfos";
 import SugestedAlbums from "./components/SugestedAlbums";
 
-import ArtistPage from "./components/ArtistPage";
+// import ArtistPage from "./components/ArtistPage";
+import AllArtistsPage from "./components/AllArtistsPage";
+// import Tests from "./components/Tests";
 
 function App() {
   const {
@@ -24,6 +26,7 @@ function App() {
   }, []);
 
   return (
+    // <Tests />
     <div
       id="masterDiv"
       className="grid grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen text-[#EBEBEB]"
@@ -48,9 +51,9 @@ function App() {
           <PlaylistsPreview />
         </div>
       </div>
-      <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-full">
-        
-        <ArtistPage />
+      <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-screen max-h-screen">
+        <AllArtistsPage />
+        {/* <ArtistPage /> */}
       </div>
       <div id="rightBar" className="bg-blue-500 w-full h-full">
         <div

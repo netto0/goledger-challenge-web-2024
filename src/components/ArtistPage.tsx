@@ -38,7 +38,7 @@ export default function ArtistPage() {
                 <div className="flex w-full  items-center text-2xl">
                   <h3
                     title={getAssetInfos(song)[0]}
-                    className="text-4xl overflow-hidden text-ellipsis whitespace-nowrap w-[40%] "
+                    className="flex text-4xl overflow-hidden text-ellipsis whitespace-nowrap h-full items-center w-[40%] "
                   >
                     {getAssetInfos(song)[0]}
                   </h3>
