@@ -15,6 +15,9 @@ interface AssetListsContextType {
   getPlaylists: () => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  getAssetInfos: (key:string) => string;
+  getAlbumSongs: (key:string) => any;
+  getArtistAlbums: (key:string) => any;
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -28,6 +31,9 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   getPlaylists: async () => {},
   loading: true,
   setLoading: () => {},
+  getAssetInfos: () => "",
+  getAlbumSongs: () => [],
+  getArtistAlbums: () => [],
 });
 
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
@@ -36,31 +42,6 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // const getOneItem = (key: string):any => {
-  //   const assetType = key.split(":")[0]
-  //   let sourceArray: any[]
-  
-  //   switch (assetType) {
-  //     case "artist":
-  //       sourceArray = artists
-  //       break;
-  //       case "album":
-  //       sourceArray = albums
-  //       break;
-  //       case "song":
-  //       sourceArray = songs
-  //       break;
-  //       case "playlist":
-  //       sourceArray = playlists
-  //       break;
-  //       default:
-  //       sourceArray = []
-  //   }
-  //   // console.log(sourceArray)
-
-  //   return [sourceArray.filter(item => item.key == key)[0], assetType]
-  // }
 
   const getArtists = async () => {
     setLoading(true);
@@ -85,6 +66,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
     songs.map((song:any) => {
       formatedArray.push({
         name: song.name,
+        albumKey: song.album["@key"],
         key: song["@key"],
       });
     });
@@ -100,6 +82,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
     albums.map((album:any) => {
       formatedArray.push({
         name: album.name,
+        artistKey: album.artist["@key"],
         year: album.year,
         key: album["@key"],
       });
@@ -124,6 +107,81 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
     setLoading(false);
   };
 
+  const getAssetInfos = (key: string):string => {
+    const assetType = key?.split(":")[0];
+    const selectedArray =
+    assetType === "artist" ? artists :
+    assetType === "album" ? albums :
+    assetType === "song" ? songs :
+    assetType === "playlist" ? playlists : [];
+
+    if (assetType == "album") {
+      let assetItemInfos:any = []
+      selectedArray.length > 0 && selectedArray.forEach(item => {
+        if(item && item.key == key) {
+          assetItemInfos[0] = item.name || "Nao encontrado"
+          assetItemInfos[1] = item.year || "Nao encontrado"
+        }
+      })
+      return assetItemInfos || "Item nao encontrado"
+    } else {
+      let assetItemName = ""
+      selectedArray.length > 0 && selectedArray.forEach(item => {
+        if(item && item.key == key) {
+          assetItemName = item.name || "Nao encontrado"
+        }
+      })
+      return assetItemName || "Item nao encontrado"
+    }
+  }
+  
+  const getAlbumSongs = (key: string) => {
+    // console.log("AlbumSongs funcionando")
+    const assetType = key.split(":")[0];
+  
+    if (assetType == "album") {
+      // console.log("Tipo Album")
+      let albumSongs: any = [];
+      songs.forEach((song) => {
+        if (song.albumKey == key) {
+          // console.log(song.albumKey, "=", key, "=", song.albumKey == key ? "True" : "False")
+          albumSongs.push(song.key);
+        }
+      });
+      return albumSongs;
+    }
+  };
+  
+  const getArtistAlbums = (key: string, returnSongs: boolean = false) => {
+    console.log("ArtistAlbums funcionando");
+    const assetType = key.split(":")[0];
+    let artistAlbums: any = [];
+    let artistSongs: any = [];
+  
+    console.log(typeof artistAlbums);
+  
+    if (assetType == "artist") {
+      console.log("Tipo Artist");
+      albums.forEach((album) => {
+        if (album.artistKey == key) {
+          // console.log(album.albumKey, "=", key, "=", album.albumKey == key ? "True" : "False")
+          artistAlbums.push(album.key);
+          artistSongs.push(getAlbumSongs(album.key));
+        }
+      });
+    }
+  
+    if (returnSongs) {
+      console.log("Retornando músicas")
+      console.log(artistSongs);
+      return artistSongs;
+    } else {
+      console.log("Retornando álbums")
+      console.log(artistAlbums);
+      return artistAlbums;
+    }
+  };
+
   return (
     <AssetListsContext.Provider
       value={{
@@ -137,6 +195,9 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         getPlaylists,
         loading,
         setLoading,
+        getAssetInfos,
+        getAlbumSongs,
+        getArtistAlbums
       }}
     >
       {props.children}
