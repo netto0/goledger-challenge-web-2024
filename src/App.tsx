@@ -9,6 +9,10 @@ import SugestedAlbums from "./components/SugestedAlbums";
 
 // import ArtistPage from "./components/ArtistPage";
 import AllArtistsPage from "./components/AllArtistsPage";
+import { Outlet, Route, Routes } from "react-router-dom";
+import AllAlbumsPage from "./components/AllplaylistsPage";
+import AllSongsPage from "./components/AllSongsPage";
+import AllPlaylistsPage from "./components/AllAlbumsPage";
 // import Tests from "./components/Tests";
 
 function App() {
@@ -52,8 +56,13 @@ function App() {
         </div>
       </div>
       <div id="centerDiv" className="bg-green-500 flex flex-col w-full h-screen max-h-screen">
-        <AllArtistsPage />
-        {/* <ArtistPage /> */}
+      <Routes>
+        <Route path="/" element={<AllArtistsPage />} />
+        <Route path="/artists" element={<AllArtistsPage />} />
+        <Route path="/albums" element={<AllAlbumsPage />} />
+        <Route path="/songs" element={<AllSongsPage />} />
+        <Route path="/playlists" element={<AllPlaylistsPage />} />
+      </Routes>
       </div>
       <div id="rightBar" className="bg-blue-500 w-full h-full">
         <div

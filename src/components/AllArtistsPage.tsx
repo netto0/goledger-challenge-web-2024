@@ -32,7 +32,7 @@ export default function AllArtistsPage() {
             </h3>
           )}
           {artists.map((artist, index) => (
-              <li artist-key={artist.key} key={index} className="w-full text-2xl border-b  border-gray-400" onClick={handleItemClick} value={artist.key}>
+              <li artist-key={artist.key} key={index} className="w-full text-2xl border-b  border-gray-400 hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" onClick={handleItemClick} value={artist.key}>
                 <div
                   className="flex h-20 items-center w-full"
                 >
