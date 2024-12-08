@@ -15,9 +15,9 @@ function App() {
     getSongs,
     getAlbums,
     getPlaylists,
+    artistKey
   } = React.useContext(AssetListsContext);
 
-  const artistKey = "artist:1fc27c52-6075-508d-ad50-92ba7ac334dc";
 
   useEffect(() => {
     getArtists(), getSongs(), getAlbums(), getPlaylists();

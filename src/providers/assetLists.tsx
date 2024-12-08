@@ -18,6 +18,8 @@ interface AssetListsContextType {
   getAssetInfos: (key: string) => string;
   getAlbumSongs: (key: string) => any;
   getArtistAlbums: (key: string, returnSongs?: boolean) => any;
+  artistKey: string;
+  setArtistKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -34,6 +36,8 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   getAssetInfos: () => "",
   getAlbumSongs: () => [],
   getArtistAlbums: () => [],
+  artistKey: "",
+  setArtistKey: () => {}
 });
 
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
@@ -42,6 +46,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [artistKey, setArtistKey] = useState("artist:87cad9f0-70ed-5eca-ac1e-837e899db13f");
 
   const getArtists = async () => {
     setLoading(true);
@@ -148,7 +153,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
             assetItemName = item.name || "Nao encontrado";
           }
         });
-      return assetItemName || "Item nao encontrado a";
+      return assetItemName || "Artista não encontrado";
     }
   };
 
@@ -217,6 +222,8 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         getAssetInfos,
         getAlbumSongs,
         getArtistAlbums,
+        artistKey,
+        setArtistKey
       }}
     >
       {props.children}

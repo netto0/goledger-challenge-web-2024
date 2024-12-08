@@ -6,10 +6,9 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 export default function ArtistPage() {
-  const { getAssetInfos, getArtistAlbums } =
+  const { getAssetInfos, getArtistAlbums, artistKey } =
     React.useContext(AssetListsContext);
 
-  const artistKey = "artist:1fc27c52-6075-508d-ad50-92ba7ac334dc";
   const artistSongs = getArtistAlbums(artistKey, true);
   const artistName = getAssetInfos(artistKey);
 
@@ -27,9 +26,14 @@ export default function ArtistPage() {
       >
         <h2 className="font-bold text-3xl my-4">Músicas</h2>
         <ul className="flex flex-col gap-3">
+          {artistSongs.length < 1 && (
+            <h3 className="text-2xl">
+              O Artista não possui músicas adicionadas...
+            </h3>
+          )}
           {artistSongs?.map((song: any, index: any) => (
             <li key={index} className="w-full">
-              <p className="flex gap-4 h-20 w-full">
+              <div className="flex gap-4 h-20 w-full">
                 <img src={coverImg} alt="albumCover" className="w-20 h-20" />
                 <div className="flex w-full  items-center text-2xl">
                   <h3
@@ -44,11 +48,11 @@ export default function ArtistPage() {
                       <FaEdit />
                     </button>
                     <button>
-                      <MdDelete className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"/>
+                      <MdDelete className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0" />
                     </button>
                   </div>
                 </div>
-              </p>
+              </div>
             </li>
           ))}
         </ul>
