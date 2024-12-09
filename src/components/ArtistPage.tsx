@@ -3,9 +3,10 @@ import { AssetListsContext } from "../providers/assetLists";
 import coverImg from "../assets/img/album.jpg";
 
 import { MdDelete } from "react-icons/md";
+import { deleteItem } from "../api/axios";
 
 export default function ArtistPage() {
-  const { getAssetInfos, getArtistAlbums, artistKey } =
+  const { getAssetInfos, getArtistAlbums, artistKey, setLoading } =
     React.useContext(AssetListsContext);
 
   const artistSongs = getArtistAlbums(artistKey, true);
@@ -14,7 +15,9 @@ export default function ArtistPage() {
   const deleteFunc = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Função Deletar");
+    setLoading(true)
+    const itemKey = e.currentTarget.getAttribute("item-key") || "Inválido";
+    deleteItem(itemKey);
   };
 
   return (
@@ -50,7 +53,8 @@ export default function ArtistPage() {
                   <span className=" w-[40%]">{getAssetInfos(song)[1]}</span>
                   <div className="flex text-4xl w-[20%] justify-end items-center gap-4">
                     <button>
-                      <MdDelete
+                    <MdDelete
+                        item-key={song}
                         className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
                         onClick={(e) => deleteFunc(e)}
                       />

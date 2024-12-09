@@ -239,7 +239,7 @@ function ContentAlbumModal() {
 }
 
 function ContentPlaylistModal() {
-  const { songs, newPlaylistObj, setNewPlaylistObj, modalActive } =
+  const { songs, newPlaylistObj, setNewPlaylistObj, modalActive, setLoading } =
     React.useContext(AssetListsContext);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -338,12 +338,14 @@ function ContentPlaylistModal() {
         </button>
         <button
           className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-          onClick={() =>
+          onClick={() => {
+            setLoading(true)
             addPlaylistService(
               newPlaylistObj.name,
               newPlaylistObj.isPrivate,
               newPlaylistObj.songsArray
             )
+          }
           }
         >
           Adicionar
