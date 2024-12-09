@@ -14,7 +14,6 @@ export default function AddButton({asset}: IProps) {
     e.preventDefault();
     e.stopPropagation();
     setModalAsset(asset)
-    console.log("Função Adicionar");
     setModalActive("add")
   };
 

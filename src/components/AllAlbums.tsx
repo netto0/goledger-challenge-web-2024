@@ -4,9 +4,28 @@ import albumImg from "../assets/img/album.jpg";
 import AddButton from "./AddButton";
 
 export default function AllAlbums() {
-  const { albums } =
+  const { albums, setModalActive, setModalAsset, setNewAlbumObj } =
     React.useContext(AssetListsContext);
 
+    const handleItemClick = (e: any) => {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      setModalActive("edit")
+      setModalAsset("album")
+  
+      const assetInfos = JSON.parse(e.currentTarget.getAttribute("asset-infos")) || "Inválido";
+  
+      setNewAlbumObj({
+        name: assetInfos.name,
+        year: assetInfos.year,
+        artistKey: assetInfos.artistKey,
+        key: assetInfos.key,
+      })
+
+      console.log("Função Editar");
+    };
+  
 
   return (
     <>
@@ -22,7 +41,7 @@ export default function AllAlbums() {
             </h3>
           )}
             {albums?.map((album: any, index: any) => (
-                <li key={index} className="w-full">
+                <li key={index} className="w-full hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" asset-infos={JSON.stringify(album)} onClick={handleItemClick}>
                   <div className="flex gap-3 h-20 w-full">
                     <img
                       src={albumImg}

@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import AddButton from "./AddButton";
 
 export default function AllArtistsPage() {
-  const { getArtistAlbums, artists, setArtistKey } =
+  const { getArtistAlbums, artists, setArtistKey, setNewArtistObj, setModalActive, setModalAsset } =
     React.useContext(AssetListsContext);
 
   const handleItemClick = (
@@ -19,6 +19,17 @@ export default function AllArtistsPage() {
   const editFunc = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
+
+    setModalActive("edit")
+    setModalAsset("artist")
+
+    const artistInfos = JSON.parse(e.currentTarget.getAttribute("asset-infos")) || "Inválido";
+
+    setNewArtistObj({
+      name: artistInfos.name,
+      country: artistInfos.country,
+      key: artistInfos.key,
+    })
     console.log("Função Editar");
   };
 
@@ -67,6 +78,7 @@ export default function AllArtistsPage() {
                   <button
                     className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
                     onClick={(e) => editFunc(e)}
+                    asset-infos={JSON.stringify(artist)}
                   >
                     <FaEdit />
                   </button>

@@ -41,6 +41,8 @@ interface AssetListsContextType {
   setNewSongObj: any
   newPlaylistObj: any
   setNewPlaylistObj: any
+  modalSubmitFunc: any
+  setModalSubmitFunc: any
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -65,6 +67,8 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   setModalActive: () => {},
   modalAsset: false,
   setModalAsset: () => {},
+  modalSubmitFunc: ()=>{console.log("Sem função")},
+  setModalSubmitFunc: () => {},
 
   newArtistObj: {
     name: "",
@@ -94,6 +98,7 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   setNewPlaylistObj: () => {},
 });
 
+
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [artists, setArtists] = useState<any[]>([]);
   const [songs, setSongs] = useState<any[]>([]);
@@ -104,6 +109,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [artistInfos, setArtistInfos] = useState({ name: "", songs: [] });
   const [modalActive, setModalActive] = useState(false);
   const [modalAsset, setModalAsset] = useState(false);
+  const [modalSubmitFunc, setModalSubmitFunc] = useState(()=>{console.log("Sem função")});
 
   const [newArtistObj, setNewArtistObj] = useState({
     name: "",
@@ -330,6 +336,10 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         setNewSongObj,
         newPlaylistObj,
         setNewPlaylistObj,
+
+        modalSubmitFunc,
+        setModalSubmitFunc
+
       }}
     >
       {props.children}

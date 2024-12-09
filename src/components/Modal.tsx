@@ -1,14 +1,18 @@
 import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { addArtistService } from "../api/services/artistServices";
+import {
+  addArtistService,
+  updateArtistService,
+} from "../api/services/artistServices";
 import { addSongService } from "../api/services/songServices";
-import { addAlbumService } from "../api/services/albumServices";
+import { addAlbumService, updateAlbumService } from "../api/services/albumServices";
 import { addPlaylistService } from "../api/services/playlistServices";
 import { SongType } from "../types/SongType";
 
 function ContentArtistModal() {
-  const { newArtistObj, setNewArtistObj } = React.useContext(AssetListsContext);
+  const { newArtistObj, setNewArtistObj, modalActive } =
+    React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -19,10 +23,12 @@ function ContentArtistModal() {
         id="artistName"
         type="text"
         placeholder="Digite o nome..."
-        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4"
+        readOnly={modalActive == "edit"}
+        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
         onChange={(e) =>
           setNewArtistObj({ ...newArtistObj, name: e.target.value })
         }
+        value={newArtistObj.name}
       />
       <label htmlFor="artistCountry" className="text-2xl text-gray-900 mb-2">
         País:
@@ -35,26 +41,40 @@ function ContentArtistModal() {
         onChange={(e) =>
           setNewArtistObj({ ...newArtistObj, country: e.target.value })
         }
+        value={newArtistObj.country}
       />
       <div className="flex justify-center gap-5">
         <button className="rounded-md py-2 px-6 bg-red-500 text-red-950">
           Cancelar
         </button>
-        <button
-          className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-          onClick={() =>
-            addArtistService(newArtistObj.name, newArtistObj.country)
-          }
-        >
-          Adicionar
-        </button>
+        {modalActive == "add" && (
+          <button
+            className="rounded-md py-2 px-6 bg-green-500 text-green-950"
+            onClick={() =>
+              addArtistService(newArtistObj.name, newArtistObj.country)
+            }
+          >
+            Adicionar
+          </button>
+        )}
+        {modalActive == "edit" && (
+          <button
+            className="rounded-md py-2 px-6 bg-green-500 text-green-950"
+            onClick={() =>
+              updateArtistService(newArtistObj.key, newArtistObj.country)
+            }
+          >
+            Adicionar
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
 function ContentSongModal() {
-  const { albums, newSongObj, setNewSongObj } = React.useContext(AssetListsContext);
+  const { albums, newSongObj, setNewSongObj } =
+    React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -67,6 +87,7 @@ function ContentSongModal() {
         placeholder="Digite o nome..."
         className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4"
         onChange={(e) => setNewSongObj({ ...newSongObj, name: e.target.value })}
+        value={newSongObj.name}
       />
       <label htmlFor="artistCountry" className="text-2xl text-gray-900 mb-2">
         Álbum:
@@ -101,7 +122,8 @@ function ContentSongModal() {
 }
 
 function ContentAlbumModal() {
-  const { artists, newAlbumObj, setNewAlbumObj } = React.useContext(AssetListsContext);
+  const { artists, newAlbumObj, setNewAlbumObj, modalActive } =
+    React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -112,10 +134,12 @@ function ContentAlbumModal() {
         id="albumName"
         type="text"
         placeholder="Digite o nome..."
-        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4"
+        readOnly={modalActive=="edit"}
+        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
         onChange={(e) =>
           setNewAlbumObj({ ...newAlbumObj, name: e.target.value })
         }
+        value={newAlbumObj.name}
       />
       <label htmlFor="albumYear" className="text-2xl text-gray-900 mb-2">
         Ano:
@@ -128,47 +152,70 @@ function ContentAlbumModal() {
         onChange={(e) =>
           setNewAlbumObj({ ...newAlbumObj, year: e.target.value })
         }
+        value={newAlbumObj.year}
       />
+      {modalActive == "add" && (
+        <>
+          <label
+            htmlFor="artistCountry"
+            className="text-2xl text-gray-900 mb-2"
+          >
+            Artista:
+          </label>
+          <select
+            id="selectAlbum"
+            className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
+            onChange={(e) =>
+              setNewAlbumObj({ ...newAlbumObj, artistKey: e.target.value })
+            }
+            value={newAlbumObj.artistKey}
+          >
+            {artists.map((artist, index) => (
+              <option key={index} value={artist.key}>
+                {artist.name}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
 
-      <label htmlFor="artistCountry" className="text-2xl text-gray-900 mb-2">
-        Artista:
-      </label>
-      <select
-        id="selectAlbum"
-        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
-        onChange={(e) =>
-          setNewAlbumObj({ ...newAlbumObj, artistKey: e.target.value })
-        }
-      >
-        {artists.map((artist, index) => (
-          <option key={index} value={artist.key}>
-            {artist.name}
-          </option>
-        ))}
-      </select>
       <div className="flex justify-center gap-5">
         <button className="rounded-md py-2 px-6 bg-red-500 text-red-950">
           Cancelar
         </button>
-        <button
-          className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-          onClick={() =>
-            addAlbumService(
-              newAlbumObj.name,
-              parseInt(newAlbumObj.year),
-              newAlbumObj.artistKey
-            )
-          }
-        >
-          Adicionar
-        </button>
+        {modalActive == "add" && (
+          <button
+            className="rounded-md py-2 px-6 bg-green-500 text-green-950"
+            onClick={() =>
+              addAlbumService(
+                newAlbumObj.name,
+                parseInt(newAlbumObj.year),
+                newAlbumObj.artistKey
+              )
+            }
+          >
+            Adicionar
+          </button>
+        )}
+        {modalActive == "edit" && (
+          <button
+            className="rounded-md py-2 px-6 bg-green-500 text-green-950"
+            onClick={() =>{
+              updateAlbumService (newAlbumObj.key, newAlbumObj.year)
+            }
+            }
+          >
+            Adicionar
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
 function ContentPlaylistModal() {
-  const { songs, newPlaylistObj, setNewPlaylistObj } = React.useContext(AssetListsContext);
+  const { songs, newPlaylistObj, setNewPlaylistObj } =
+    React.useContext(AssetListsContext);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const options = e.target.options;
@@ -259,7 +306,7 @@ export default function Modal() {
     React.useContext(AssetListsContext);
   let modalTitle = "";
   let assetTitle = "";
-  
+
   if (modalActive == "add") {
     modalTitle = "Adicionar";
   } else if (modalActive == "delete") {
