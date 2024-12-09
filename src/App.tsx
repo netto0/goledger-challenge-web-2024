@@ -13,7 +13,7 @@ import AllArtistAlbums from "./components/AllArtistAlbums";
 import AllAlbums from "./components/AllAlbums";
 import Playlists from "./components/Playlists";
 import Modal from "./components/Modal";
-import Tests from "./components/Tests";
+// import Tests from "./components/Tests";
 
 function App() {
   const {
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <>
-      <Tests />
+      {/* <Tests /> */}
       <>
         {modalActive && <Modal />}
         <div

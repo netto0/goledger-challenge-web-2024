@@ -2,7 +2,6 @@ import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
 import coverImg from "../assets/img/album.jpg";
 
-import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 export default function ArtistPage() {
@@ -12,17 +11,11 @@ export default function ArtistPage() {
   const artistSongs = getArtistAlbums(artistKey, true);
   const artistName = getAssetInfos(artistKey);
 
-  const editFunc = (e: any) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log("Função Editar")
-  }
-  
   const deleteFunc = (e: any) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log("Função Deletar")
-  }
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Função Deletar");
+  };
 
   return (
     <>
@@ -56,11 +49,11 @@ export default function ArtistPage() {
                   </h3>
                   <span className=" w-[40%]">{getAssetInfos(song)[1]}</span>
                   <div className="flex text-4xl w-[20%] justify-end items-center gap-4">
-                    <button className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0" onClick={e => editFunc(e)}>
-                      <FaEdit />
-                    </button>
                     <button>
-                      <MdDelete className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0" onClick={e => deleteFunc(e)}/>
+                      <MdDelete
+                        className="hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
+                        onClick={(e) => deleteFunc(e)}
+                      />
                     </button>
                   </div>
                 </div>

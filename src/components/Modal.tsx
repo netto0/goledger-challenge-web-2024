@@ -6,7 +6,10 @@ import {
   updateArtistService,
 } from "../api/services/artistServices";
 import { addSongService } from "../api/services/songServices";
-import { addAlbumService, updateAlbumService } from "../api/services/albumServices";
+import {
+  addAlbumService,
+  updateAlbumService,
+} from "../api/services/albumServices";
 import { addPlaylistService } from "../api/services/playlistServices";
 import { SongType } from "../types/SongType";
 
@@ -134,7 +137,7 @@ function ContentAlbumModal() {
         id="albumName"
         type="text"
         placeholder="Digite o nome..."
-        readOnly={modalActive=="edit"}
+        readOnly={modalActive == "edit"}
         className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
         onChange={(e) =>
           setNewAlbumObj({ ...newAlbumObj, name: e.target.value })
@@ -200,10 +203,9 @@ function ContentAlbumModal() {
         {modalActive == "edit" && (
           <button
             className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-            onClick={() =>{
-              updateAlbumService (newAlbumObj.key, newAlbumObj.year)
-            }
-            }
+            onClick={() => {
+              updateAlbumService(newAlbumObj.key, newAlbumObj.year);
+            }}
           >
             Adicionar
           </button>
@@ -214,7 +216,7 @@ function ContentAlbumModal() {
 }
 
 function ContentPlaylistModal() {
-  const { songs, newPlaylistObj, setNewPlaylistObj } =
+  const { songs, newPlaylistObj, setNewPlaylistObj, modalActive } =
     React.useContext(AssetListsContext);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -230,6 +232,22 @@ function ContentPlaylistModal() {
     setNewPlaylistObj({ ...newPlaylistObj, songsArray: selectedValues });
   };
 
+  let songsKeysArray:any = []
+
+  if (typeof newPlaylistObj.songsArray === "string") {
+    try {
+      JSON.parse(newPlaylistObj.songsArray).forEach((song: any) =>
+        songsKeysArray.push(song["@key"])
+      );
+    } catch (error) {
+      console.error("Erro ao parsear songsArray:", error);
+    }
+  } else if (Array.isArray(newPlaylistObj.songsArray)) {
+    newPlaylistObj.songsArray.forEach((song: any) =>
+      songsKeysArray.push(song["@key"])
+    );
+  }
+
   return (
     <div className="flex flex-col">
       <label htmlFor="playlistName" className="text-2xl text-gray-900 mb-2">
@@ -239,7 +257,9 @@ function ContentPlaylistModal() {
         id="playlistName"
         type="text"
         placeholder="Digite o nome..."
-        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4"
+        readOnly={modalActive == "edit"}
+        className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4 outline-none"
+        value={newPlaylistObj.name}
         onChange={(e) =>
           setNewPlaylistObj({ ...newPlaylistObj, name: e.target.value })
         }
@@ -275,7 +295,7 @@ function ContentPlaylistModal() {
         onChange={(e) => handleSelectChange(e)}
       >
         {songs.map((song, index) => (
-          <option key={index} value={song.key}>
+          <option key={index} value={song.key} className={songsKeysArray.includes(song.key) && "bg-blue-500"}>
             {song.name}
           </option>
         ))}
@@ -302,8 +322,15 @@ function ContentPlaylistModal() {
 }
 
 export default function Modal() {
-  const { modalActive, setModalActive, modalAsset } =
-    React.useContext(AssetListsContext);
+  const {
+    modalActive,
+    setModalActive,
+    modalAsset,
+    setNewArtistObj,
+    setNewAlbumObj,
+    setNewSongObj,
+    setNewPlaylistObj,
+  } = React.useContext(AssetListsContext);
   let modalTitle = "";
   let assetTitle = "";
 
@@ -327,6 +354,28 @@ export default function Modal() {
 
   const closeModal = () => {
     setModalActive(false);
+    setNewArtistObj({
+      name: "",
+      country: "",
+      key: "",
+    });
+    setNewAlbumObj({
+      name: "",
+      year: "",
+      artistKey: "",
+      key: "",
+    });
+    setNewSongObj({
+      name: "",
+      albumKey: "",
+      key: "",
+    });
+    setNewPlaylistObj({
+      name: "",
+      isPrivate: false,
+      songsArray: [] as SongType[],
+      key: "",
+    });
   };
 
   return (

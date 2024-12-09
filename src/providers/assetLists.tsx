@@ -67,7 +67,7 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   setModalActive: () => {},
   modalAsset: false,
   setModalAsset: () => {},
-  modalSubmitFunc: ()=>{console.log("Sem função")},
+  modalSubmitFunc: ()=>{},
   setModalSubmitFunc: () => {},
 
   newArtistObj: {
@@ -109,7 +109,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [artistInfos, setArtistInfos] = useState({ name: "", songs: [] });
   const [modalActive, setModalActive] = useState(false);
   const [modalAsset, setModalAsset] = useState(false);
-  const [modalSubmitFunc, setModalSubmitFunc] = useState(()=>{console.log("Sem função")});
+  const [modalSubmitFunc, setModalSubmitFunc] = useState(()=>{});
 
   const [newArtistObj, setNewArtistObj] = useState({
     name: "",
