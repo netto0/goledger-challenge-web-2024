@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { addArtistService } from "../api/services/artistServices";
@@ -8,11 +8,7 @@ import { addPlaylistService } from "../api/services/playlistServices";
 import { SongType } from "../types/SongType";
 
 function ContentArtistModal() {
-  const [newArtistObj, setNewArtistObj] = useState({
-    name: "",
-    country: "",
-    key: "",
-  });
+  const { newArtistObj, setNewArtistObj } = React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -58,13 +54,7 @@ function ContentArtistModal() {
 }
 
 function ContentSongModal() {
-  const { albums } = React.useContext(AssetListsContext);
-
-  const [newSongObj, setNewSongObj] = useState({
-    name: "",
-    albumKey: "",
-    key: "",
-  });
+  const { albums, newSongObj, setNewSongObj } = React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -95,7 +85,6 @@ function ContentSongModal() {
           </option>
         ))}
       </select>
-      {/* <input id="artistCountry" type="text" placeholder="Digite o país..." className="rounded-lg text-2xl py-3 px-2 placeholder:text-gray-400 mb-4"/> */}
       <div className="flex justify-center gap-5">
         <button className="rounded-md py-2 px-6 bg-red-500 text-red-950">
           Cancelar
@@ -112,14 +101,7 @@ function ContentSongModal() {
 }
 
 function ContentAlbumModal() {
-  const { artists } = React.useContext(AssetListsContext);
-
-  const [newAlbumObj, setNewAlbumObj] = useState({
-    name: "",
-    year: "",
-    artistKey: "",
-    key: "",
-  });
+  const { artists, newAlbumObj, setNewAlbumObj } = React.useContext(AssetListsContext);
 
   return (
     <div className="flex flex-col">
@@ -186,14 +168,7 @@ function ContentAlbumModal() {
 }
 
 function ContentPlaylistModal() {
-  const { songs } = React.useContext(AssetListsContext);
-
-  const [newPlaylistObj, setNewPlaylistObj] = useState({
-    name: "",
-    isPrivate: false,
-    songsArray: [] as SongType[],
-    key: "",
-  });
+  const { songs, newPlaylistObj, setNewPlaylistObj } = React.useContext(AssetListsContext);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const options = e.target.options;
@@ -201,12 +176,10 @@ function ContentPlaylistModal() {
 
     for (let i = 0; i < options.length; i++) {
       if (options[i].selected) {
-        // selectedValues.push(options[i].value);
         selectedValues.push({ "@assetType": "song", "@key": options[i].value });
       }
     }
 
-    // setSelectedOptions(selectedValues);
     setNewPlaylistObj({ ...newPlaylistObj, songsArray: selectedValues });
   };
 

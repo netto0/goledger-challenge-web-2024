@@ -4,6 +4,7 @@ import { getSongsService } from "../api/services/songServices";
 import { getAlbumsService } from "../api/services/albumServices";
 import { getPlaylistsService } from "../api/services/playlistServices";
 import { AssetType } from "../types/assetType";
+import { SongType } from "../types/SongType";
 
 type ModalType = "edit" | "delete" | "add"
 
@@ -31,6 +32,15 @@ interface AssetListsContextType {
   setModalActive: any
   modalAsset: boolean | AssetType;
   setModalAsset: any
+
+  newArtistObj: any
+  setNewArtistObj: any
+  newAlbumObj: any
+  setNewAlbumObj: any
+  newSongObj: any
+  setNewSongObj: any
+  newPlaylistObj: any
+  setNewPlaylistObj: any
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -55,6 +65,33 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   setModalActive: () => {},
   modalAsset: false,
   setModalAsset: () => {},
+
+  newArtistObj: {
+    name: "",
+    country: "",
+    key: "",
+  },
+  setNewArtistObj: () => {},
+  newSongObj: {
+    name: "",
+    albumKey: "",
+    key: "",
+  },
+  setNewSongObj: () => {},
+  newAlbumObj: {
+    name: "",
+    year: "",
+    artistKey: "",
+    key: "",
+  },
+  setNewAlbumObj: () => {},
+  newPlaylistObj: {
+    name: "",
+    isPrivate: false,
+    songsArray: [] as SongType[],
+    key: "",
+  },
+  setNewPlaylistObj: () => {},
 });
 
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
@@ -67,6 +104,32 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [artistInfos, setArtistInfos] = useState({ name: "", songs: [] });
   const [modalActive, setModalActive] = useState(false);
   const [modalAsset, setModalAsset] = useState(false);
+
+  const [newArtistObj, setNewArtistObj] = useState({
+    name: "",
+    country: "",
+    key: "",
+  });
+
+  const [newSongObj, setNewSongObj] = useState({
+    name: "",
+    albumKey: "",
+    key: "",
+  });
+
+  const [newAlbumObj, setNewAlbumObj] = useState({
+    name: "",
+    year: "",
+    artistKey: "",
+    key: "",
+  });
+
+  const [newPlaylistObj, setNewPlaylistObj] = useState({
+    name: "",
+    isPrivate: false,
+    songsArray: [] as SongType[],
+    key: "",
+  });
 
   useEffect(() => {
     setArtistInfos({
@@ -257,7 +320,16 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         modalActive,
         setModalActive,
         modalAsset,
-        setModalAsset
+        setModalAsset,
+
+        newArtistObj,
+        setNewArtistObj,
+        newAlbumObj,
+        setNewAlbumObj,
+        newSongObj,
+        setNewSongObj,
+        newPlaylistObj,
+        setNewPlaylistObj,
       }}
     >
       {props.children}
