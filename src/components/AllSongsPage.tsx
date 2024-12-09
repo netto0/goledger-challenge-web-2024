@@ -3,7 +3,7 @@ import { AssetListsContext } from "../providers/assetLists";
 import coverImg from "../assets/img/album.jpg";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import AddButton from "./addButton";
+import AddButton from "./AddButton";
 
 export default function AllSongsPage() {
   const { songs, getAssetInfos } = React.useContext(AssetListsContext);

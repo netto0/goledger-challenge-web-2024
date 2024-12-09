@@ -1,7 +1,7 @@
 import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
 import albumImg from "../assets/img/album.jpg";
-import AddButton from "./addButton";
+import AddButton from "./AddButton";
 
 export default function AllAlbums() {
   const { albums } =

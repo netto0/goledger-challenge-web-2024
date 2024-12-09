@@ -3,7 +3,7 @@ import { AssetListsContext } from "../providers/assetLists";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import AddButton from "./addButton";
+import AddButton from "./AddButton";
 
 export default function AllArtistsPage() {
   const { getArtistAlbums, artists, setArtistKey } =

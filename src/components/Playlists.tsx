@@ -1,6 +1,6 @@
 import React from "react";
 import { AssetListsContext } from "../providers/assetLists";
-import AddButton from "./addButton";
+import AddButton from "./AddButton";
 
 export default function Playlists() {
   const { playlists } = React.useContext(AssetListsContext);

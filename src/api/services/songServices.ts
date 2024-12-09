@@ -29,6 +29,7 @@ const addSongService = async (name: string, albumKey: string) => {
         auth: authPayload,
       }
     );
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

@@ -71,9 +71,7 @@ function App() {
               <Route path="/" element={<AllArtistsPage />} />
               <Route path="/artist" element={<ArtistPage />} />
               <Route path="/artists" element={<AllArtistsPage />} />
-              {/* <Route path="/albums" element={<AllAlbumsPage />} /> */}
               <Route path="/songs" element={<AllSongsPage />} />
-              {/* <Route path="/playlists" element={<AllPlaylistsPage />} /> */}
             </Routes>
           </div>
           <div

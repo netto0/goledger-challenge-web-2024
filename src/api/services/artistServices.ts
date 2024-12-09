@@ -29,6 +29,7 @@ const addArtistService = async (name: string, country: string) => {
         auth: authPayload,
       }
     );
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -48,6 +49,7 @@ const updateArtistService = async (key: string, country: string) => {
     }, {
       auth: authPayload,
     });
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

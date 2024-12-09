@@ -34,7 +34,7 @@ const addAlbumService = async (
         auth: authPayload,
       }
     );
-    console.log("Álbum criado!");
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -58,6 +58,7 @@ const updateAlbumService = async (key: string, year: number) => {
         auth: authPayload,
       }
     );
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

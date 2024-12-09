@@ -1,9 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { authPayload, baseUrl, getItensByType } from "../axios";
-
-type SongObject = {
-  "@key": string;
-};
+import { SongType } from "../../types/SongType";
 
 const getPlaylistsService = async () => {
   try {
@@ -19,7 +16,7 @@ const getPlaylistsService = async () => {
 const addPlaylistService = async (
   name: string,
   isPrivate: boolean,
-  songsArray: SongObject[]
+  songsArray: SongType[]
 ) => {
   try {
     const response = await axios.post(
@@ -38,7 +35,7 @@ const addPlaylistService = async (
         auth: authPayload,
       }
     );
-    console.log("Playlist criada!");
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -63,6 +60,7 @@ const updatePlaylistService = async (key: string, isPrivate: boolean, songsArray
         auth: authPayload,
       }
     );
+    location.reload()
     return response;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
