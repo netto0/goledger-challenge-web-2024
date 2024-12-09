@@ -46,7 +46,7 @@ export default function AllArtistsPage() {
     <>
       <div
         id="titleDiv"
-        className="border text-4xl flex border-gray-700 w-full h-[10%] max-h-[10%] p-2 items-center justify-center gap-5"
+        className="text-4xl flex border-gray-700 w-full h-[10%] max-h-[10%] p-2 items-center justify-center gap-5"
       >
         <h2 className="text-3xl font-bold">ARTISTAS</h2>
         <AddButton asset="artist" />

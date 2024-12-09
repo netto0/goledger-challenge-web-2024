@@ -20,14 +20,14 @@ export default function AllSongsPage() {
     <>
       <div
         id="titleDiv"
-        className="border flex border-gray-700 w-full h-[10%] p-2 items-center justify-center gap-5"
+        className="border-x flex border-gray-700 w-full h-[10%] p-2 items-center justify-center gap-5"
       >
         <h2 className="text-3xl font-bold">MÚSICAS</h2>
         <AddButton asset="song" />
       </div>
       <div
         id="mainContentDiv"
-        className="border flex flex-col border-gray-700 w-full h-[90%] max-h-[90%] p-2"
+        className="border-x flex flex-col border-gray-700 w-full h-[90%] max-h-[90%] p-2"
       >
         {/* {JSON.stringify(songs)} */}
         <ul className="scrollable-div flex flex-col gap-3 overflow-y-auto">
