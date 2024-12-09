@@ -6,7 +6,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL || "";
 const authPayload = {
   username: import.meta.env.VITE_USERNAME || "",
   password: import.meta.env.VITE_PASSWORD || "",
-}
+};
 
 const getItensByType = async (type: AssetType) => {
   const response = await axios.post(
@@ -27,15 +27,20 @@ const getItensByType = async (type: AssetType) => {
 
 const deleteItem = async (itemKey: string) => {
   try {
-    const response = await axios.delete(`${baseUrl}/invoke/deleteAsset`, {
-      data: {
-        key: {
-          "@assetType": "artist",
-          "@key": itemKey,
+    console.log(`Deletando "${itemKey}"...`);
+    const response = await axios.delete(
+      `${baseUrl}/invoke/deleteAsset`,
+      {
+        data: {
+          key: {
+            "@key": itemKey,
+          },
+          cascade: true,
         },
-        cascade: true,
-      },
-    });
+        auth: authPayload,
+      }
+    );
+    response && console.log("Deletado com sucesso: ", response);
     location.reload();
     return response;
   } catch (error) {
@@ -44,7 +49,5 @@ const deleteItem = async (itemKey: string) => {
     }
   }
 };
-
-
 
 export { getItensByType, baseUrl, authPayload, deleteItem };
