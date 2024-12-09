@@ -41,7 +41,7 @@ export default function AllAlbums() {
             </h3>
           )}
             {albums?.map((album: any, index: any) => (
-                <li key={index} className="w-full hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" asset-infos={JSON.stringify(album)} onClick={handleItemClick}>
+                <li key={index} className="w-full hover:bg-[#d3d3d310] border-b border-gray-600 hover:cursor-pointer active:bg-[#00000030] transition-all" asset-infos={JSON.stringify(album)} onClick={handleItemClick}>
                   <div className="flex gap-3 h-20 w-full">
                     <img
                       src={albumImg}

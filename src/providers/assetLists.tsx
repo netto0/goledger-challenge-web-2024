@@ -17,7 +17,7 @@ interface AssetListsContextType {
   getAlbums: () => Promise<void>;
   playlists: any[];
   getPlaylists: () => Promise<void>;
-  loading: boolean;
+  loading: any;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   getAssetInfos: (key: string) => string;
   getAlbumSongs: (key: string) => any;

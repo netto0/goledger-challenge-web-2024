@@ -33,7 +33,7 @@ export default function Playlists() {
         <div className="scrollable-div h-full flex flex-col gap-3 overflow-y-scroll max-h-full pr-2">
           <ul className="flex flex-col pl-1 w-full">
             {playlists.map((playlist, index) => (
-              <li key={index} className="w-full hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md" asset-infos={JSON.stringify(playlist)} onClick={e => handleItemClick(e)}>
+              <li key={index} className="w-full hover:bg-[#d3d3d310] border-b border-gray-600 hover:cursor-pointer active:bg-[#00000030] transition-all" asset-infos={JSON.stringify(playlist)} onClick={e => handleItemClick(e)}>
                 <div className="flex h-14 items-center justify-between w-full">
                   <h3
                     title={playlist?.name}

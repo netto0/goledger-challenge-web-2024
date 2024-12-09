@@ -22,6 +22,7 @@ function App() {
     getPlaylists,
     artistKey,
     modalActive,
+    loading
   } = React.useContext(AssetListsContext);
 
   const currentLocation = useLocation().pathname;
@@ -34,10 +35,11 @@ function App() {
     <>
       <>
         {modalActive && <Modal />}
+        {loading && <div className="w-screen h-screen absolute z-50 cursor-wait"/>}
         <div className="absolute filter blur-sm w-screen h-screen z-10 bg-[url('./assets/img/background.jpg')] bg-cover bg-center"/>
         <div
           id="masterDiv"
-          className="absolute grid z-50 grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen text-[#c7c7c7]"
+          className="absolute grid z-30 grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen text-[#c7c7c7]"
         >
           <div
             id="leftBar"

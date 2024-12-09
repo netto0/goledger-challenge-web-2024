@@ -24,7 +24,7 @@ const deleteFunc = (e: any) => {
 };
 
 function ContentArtistModal() {
-  const { newArtistObj, setNewArtistObj, modalActive } =
+  const { newArtistObj, setNewArtistObj, modalActive, setLoading } =
     React.useContext(AssetListsContext);
 
   return (
@@ -63,9 +63,10 @@ function ContentArtistModal() {
         {modalActive == "add" && (
           <button
             className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-            onClick={() =>
-              addArtistService(newArtistObj.name, newArtistObj.country)
-            }
+            onClick={() => {
+              setLoading(true);
+              addArtistService(newArtistObj.name, newArtistObj.country);
+            }}
           >
             Adicionar
           </button>
@@ -73,11 +74,12 @@ function ContentArtistModal() {
         {modalActive == "edit" && (
           <button
             className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-            onClick={() =>
-              updateArtistService(newArtistObj.key, newArtistObj.country)
-            }
+            onClick={() => {
+              setLoading(true);
+              updateArtistService(newArtistObj.key, newArtistObj.country);
+            }}
           >
-            Adicionar
+            Editar
           </button>
         )}
       </div>
@@ -86,7 +88,7 @@ function ContentArtistModal() {
 }
 
 function ContentSongModal() {
-  const { albums, newSongObj, setNewSongObj } =
+  const { albums, newSongObj, setNewSongObj, setLoading } =
     React.useContext(AssetListsContext);
 
   return (
@@ -125,7 +127,10 @@ function ContentSongModal() {
         </button>
         <button
           className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-          onClick={() => addSongService(newSongObj.name, newSongObj.albumKey)}
+          onClick={() => {
+            setLoading(true),
+              addSongService(newSongObj.name, newSongObj.albumKey);
+          }}
         >
           Adicionar
         </button>
@@ -135,7 +140,7 @@ function ContentSongModal() {
 }
 
 function ContentAlbumModal() {
-  const { artists, newAlbumObj, setNewAlbumObj, modalActive } =
+  const { artists, newAlbumObj, setNewAlbumObj, modalActive, setLoading } =
     React.useContext(AssetListsContext);
 
   return (
@@ -143,7 +148,7 @@ function ContentAlbumModal() {
       <MdDelete
         item-key={newAlbumObj.key}
         className="text-3xl absolute bottom-0 hover:cursor-pointer hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
-        onClick={e => deleteFunc(e)}
+        onClick={(e) => deleteFunc(e)}
       />
       <label htmlFor="albumName" className="text-2xl text-gray-900 mb-2">
         Nome:
@@ -204,12 +209,14 @@ function ContentAlbumModal() {
         {modalActive == "add" && (
           <button
             className="rounded-md py-2 px-6 bg-green-500 text-green-950"
-            onClick={() =>
+            onClick={() => {
+              setLoading(true)
               addAlbumService(
                 newAlbumObj.name,
                 parseInt(newAlbumObj.year),
                 newAlbumObj.artistKey
               )
+            }
             }
           >
             Adicionar
@@ -219,10 +226,11 @@ function ContentAlbumModal() {
           <button
             className="rounded-md py-2 px-6 bg-green-500 text-green-950"
             onClick={() => {
+              setLoading(true)
               updateAlbumService(newAlbumObj.key, newAlbumObj.year);
             }}
           >
-            Adicionar
+            Editar
           </button>
         )}
       </div>
@@ -247,7 +255,7 @@ function ContentPlaylistModal() {
     setNewPlaylistObj({ ...newPlaylistObj, songsArray: selectedValues });
   };
 
-  let songsKeysArray:any = []
+  let songsKeysArray: any = [];
 
   if (typeof newPlaylistObj.songsArray === "string") {
     try {
@@ -268,7 +276,7 @@ function ContentPlaylistModal() {
       <MdDelete
         item-key={newPlaylistObj.key}
         className="text-3xl absolute bottom-0 hover:cursor-pointer hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
-        onClick={e => deleteFunc(e)}
+        onClick={(e) => deleteFunc(e)}
       />
       <label htmlFor="playlistName" className="text-2xl text-gray-900 mb-2">
         Nome:
@@ -315,7 +323,11 @@ function ContentPlaylistModal() {
         onChange={(e) => handleSelectChange(e)}
       >
         {songs.map((song, index) => (
-          <option key={index} value={song.key} className={songsKeysArray.includes(song.key) && "bg-blue-500"}>
+          <option
+            key={index}
+            value={song.key}
+            className={songsKeysArray.includes(song.key) && "bg-blue-500"}
+          >
             {song.name}
           </option>
         ))}
@@ -349,7 +361,7 @@ export default function Modal() {
     setNewArtistObj,
     setNewAlbumObj,
     setNewSongObj,
-    setNewPlaylistObj,
+    setNewPlaylistObj
   } = React.useContext(AssetListsContext);
   let modalTitle = "";
   let assetTitle = "";
@@ -399,22 +411,19 @@ export default function Modal() {
   };
 
   return (
-    <div
-      className="w-screen h-screen flex justify-center items-center bg-[#000000ee] absolute z-50 text-3xl text-gray-900"
-      onClick={closeModal}
-    >
+    <div className="w-screen h-screen flex justify-center items-center bg-[#000000ee] absolute z-40 text-3xl text-gray-900" onClick={closeModal}> 
       <div
         className="relative border w-1/3 h-fit rounded-lg px-4 py-6 bg-[#edededc2]"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {e.stopPropagation()}}
       >
-        <button className="absolute top-4 right-4" onClick={closeModal}>
+        <button className="absolute top-4 right-4" onClick={() => closeModal()}>
           <IoIosCloseCircleOutline />
         </button>
         <h2 className="text-center font-semibold">
           {modalTitle} {assetTitle || "False"}
         </h2>
 
-        {modalAsset == "artist" && <ContentArtistModal />}
+        {modalAsset == "artist" && <ContentArtistModal/>}
         {modalAsset == "song" && <ContentSongModal />}
         {modalAsset == "album" && <ContentAlbumModal />}
         {modalAsset == "playlist" && <ContentPlaylistModal />}

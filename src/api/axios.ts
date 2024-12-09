@@ -27,7 +27,6 @@ const getItensByType = async (type: AssetType) => {
 
 const deleteItem = async (itemKey: string) => {
   try {
-    console.log(`Deletando "${itemKey}"...`);
     const response = await axios.delete(
       `${baseUrl}/invoke/deleteAsset`,
       {

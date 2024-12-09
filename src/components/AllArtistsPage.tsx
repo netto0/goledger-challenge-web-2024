@@ -7,7 +7,7 @@ import AddButton from "./AddButton";
 import { deleteItem } from "../api/axios";
 
 export default function AllArtistsPage() {
-  const { getArtistAlbums, artists, setArtistKey, setNewArtistObj, setModalActive, setModalAsset } =
+  const { getArtistAlbums, artists, setArtistKey, setNewArtistObj, setModalActive, setModalAsset, setLoading } =
     React.useContext(AssetListsContext);
 
   const handleItemClick = (
@@ -37,6 +37,7 @@ export default function AllArtistsPage() {
   const deleteFunc = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
+    setLoading(true)
 
     const itemKey = e.currentTarget.getAttribute("item-key") || "Inválido";
     deleteItem(itemKey);
@@ -53,7 +54,7 @@ export default function AllArtistsPage() {
       </div>
       <div
         id="mainContentDiv"
-        className="border flex flex-col border-gray-700 w-full h-[90%] max-h-[90%] px-2"
+        className="flex flex-col border-gray-700 w-full h-[90%] max-h-[90%] px-2"
       >
         <ul className="scrollable-div flex flex-col h-full overflow-y-auto my-2">
           {artists.map((artist, index) => (
@@ -61,7 +62,7 @@ export default function AllArtistsPage() {
               to="/artist"
               artist-key={artist.key}
               key={index}
-              className="w-full text-2xl border-b  border-gray-400 hover:bg-[#00000010] hover:cursor-pointer active:bg-[#00000030] transition-all rounded-md"
+              className="w-full text-2xl border-b  border-gray-600 hover:bg-[#d3d3d310] hover:cursor-pointer active:bg-[#00000030] transition-all"
               onClick={(e) => handleItemClick(e)}
             >
               <div className="flex h-20 items-center w-full gap-3">

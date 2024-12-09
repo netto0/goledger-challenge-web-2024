@@ -6,9 +6,11 @@ export default function SearchBar() {
   return (
     <div className="relative h-4/5">
       <input
-        className="bg-[#bebebe30] rounded-full h-full w-full outline-none px-5 text-3xl placeholder-gray-300"
+        className="bg-[#bebebe30] rounded-full h-full w-full outline-none px-5 text-3xl placeholder-gray-300 cursor-not-allowed"
+        title="Em breve..."
         autoComplete="off"
         type="text"
+        readOnly
         placeholder="Buscar..."
         name="searchBar"
         id="searchBar"
