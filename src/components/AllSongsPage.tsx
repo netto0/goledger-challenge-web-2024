@@ -24,10 +24,10 @@ export default function AllSongsPage() {
     <>
       <div
         id="titleDiv"
-        className="border flex text-4xl border-gray-700 w-full h-[10%] p-2 items-center justify-center gap-5"
+        className="border flex border-gray-700 w-full h-[10%] p-2 items-center justify-center gap-5"
       >
         <h2 className="text-3xl font-bold">MÚSICAS</h2>
-        <AddButton />
+        <AddButton asset="song"/>
       </div>
       <div
         id="mainContentDiv"
