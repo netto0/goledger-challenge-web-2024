@@ -13,8 +13,6 @@ import AllArtistAlbums from "./components/AllArtistAlbums";
 import AllAlbums from "./components/AllAlbums";
 import Playlists from "./components/Playlists";
 import Modal from "./components/Modal";
-// import { deleteItem } from "./api/axios";
-// import Tests from "./components/Tests";
 
 function App() {
   const {
@@ -34,12 +32,12 @@ function App() {
 
   return (
     <>
-      {/* <Tests /> */}
       <>
         {modalActive && <Modal />}
+        <div className="absolute filter blur-sm w-screen h-screen z-10 bg-[url('./assets/img/background.jpg')] bg-cover bg-center"/>
         <div
           id="masterDiv"
-          className="grid grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen text-[#c7c7c7] bg-gray-800"
+          className="absolute grid z-50 grid-cols-[1fr_3fr_1.3fr] gap-0.5 h-screen text-[#c7c7c7]"
         >
           <div
             id="leftBar"
