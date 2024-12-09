@@ -12,6 +12,16 @@ import {
 } from "../api/services/albumServices";
 import { addPlaylistService } from "../api/services/playlistServices";
 import { SongType } from "../types/SongType";
+import { MdDelete } from "react-icons/md";
+import { deleteItem } from "../api/axios";
+
+const deleteFunc = (e: any) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const itemKey = e.currentTarget.getAttribute("item-key") || "Inválido";
+  deleteItem(itemKey);
+};
 
 function ContentArtistModal() {
   const { newArtistObj, setNewArtistObj, modalActive } =
@@ -129,7 +139,12 @@ function ContentAlbumModal() {
     React.useContext(AssetListsContext);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative">
+      <MdDelete
+        item-key={newAlbumObj.key}
+        className="text-3xl absolute bottom-0 hover:cursor-pointer hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
+        onClick={e => deleteFunc(e)}
+      />
       <label htmlFor="albumName" className="text-2xl text-gray-900 mb-2">
         Nome:
       </label>
@@ -249,7 +264,12 @@ function ContentPlaylistModal() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex relative flex-col">
+      <MdDelete
+        item-key={newPlaylistObj.key}
+        className="text-3xl absolute bottom-0 hover:cursor-pointer hover:text-gray-300 hover:scale-105 hover:-translate-y-1 transition-all active:text-gray-500 active:scale-95 active:-translate-y-0"
+        onClick={e => deleteFunc(e)}
+      />
       <label htmlFor="playlistName" className="text-2xl text-gray-900 mb-2">
         Nome:
       </label>

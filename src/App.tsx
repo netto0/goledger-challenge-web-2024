@@ -13,7 +13,7 @@ import AllArtistAlbums from "./components/AllArtistAlbums";
 import AllAlbums from "./components/AllAlbums";
 import Playlists from "./components/Playlists";
 import Modal from "./components/Modal";
-import { deleteItem } from "./api/axios";
+// import { deleteItem } from "./api/axios";
 // import Tests from "./components/Tests";
 
 function App() {
@@ -35,7 +35,6 @@ function App() {
   return (
     <>
       {/* <Tests /> */}
-      <button onClick={()=>deleteItem("song:030cf497-7861-5155-b4c4-bef133fdca94")}>DELETAR</button>
       <>
         {modalActive && <Modal />}
         <div
