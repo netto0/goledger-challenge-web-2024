@@ -3,6 +3,7 @@ import { AssetListsContext } from "../providers/assetLists";
 import coverImg from "../assets/img/album.jpg";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import AddButton from "./addButton";
 
 export default function AllSongsPage() {
   const { songs, getAssetInfos } = React.useContext(AssetListsContext);
@@ -23,9 +24,10 @@ export default function AllSongsPage() {
     <>
       <div
         id="titleDiv"
-        className="border flex flex-col border-gray-700 w-full h-[10%] p-2 justify-center"
+        className="border flex text-4xl border-gray-700 w-full h-[10%] p-2 items-center justify-center gap-5"
       >
-        <h2 className="text-3xl font-bold">Músicas</h2>
+        <h2 className="text-3xl font-bold">MÚSICAS</h2>
+        <AddButton />
       </div>
       <div
         id="mainContentDiv"
