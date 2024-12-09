@@ -29,13 +29,12 @@ export default function AllSongsPage() {
         id="mainContentDiv"
         className="border-x flex flex-col border-gray-700 w-full h-[90%] max-h-[90%] p-2"
       >
-        {/* {JSON.stringify(songs)} */}
         <ul className="scrollable-div flex flex-col gap-3 overflow-y-auto">
           {songs?.length < 1 && (
             <h3 className="text-2xl">Nenhuma música foi adicionada ainda...</h3>
           )}
           {songs?.map((song: any, index: any) => (
-            <li key={index} className="w-full">
+            <li key={index} className="w-full border-b border-gray-600 hover:bg-[#d3d3d310] hover:cursor-pointer active:bg-[#00000030] transition-all">
               <div className="flex gap-4 h-20 w-full">
                 <img src={coverImg} alt="albumCover" className="w-20 h-20" />
                 <div className="flex w-full  items-center text-2xl gap-3">
