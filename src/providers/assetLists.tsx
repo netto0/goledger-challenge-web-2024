@@ -4,6 +4,8 @@ import { getSongsService } from "../api/services/songServices";
 import { getAlbumsService } from "../api/services/albumServices";
 import { getPlaylistsService } from "../api/services/playlistServices";
 
+type modalType = "edit" | "delete" | "add"
+
 interface AssetListsContextType {
   artists: any[];
   getArtists: () => Promise<void>;
@@ -24,6 +26,8 @@ interface AssetListsContextType {
   setArtistInfos: React.Dispatch<
     SetStateAction<{ name: string; songs: never[] }>
   >;
+  modalActive: boolean | modalType;
+  setModalActive: any
 }
 
 export const AssetListsContext = React.createContext<AssetListsContextType>({
@@ -44,6 +48,8 @@ export const AssetListsContext = React.createContext<AssetListsContextType>({
   setArtistKey: () => {},
   artistInfos: { name: "", songs: [] },
   setArtistInfos: () => {},
+  modalActive: false,
+  setModalActive: () => {},
 });
 
 export const AssetListsProvider = (props: { children: React.ReactNode }) => {
@@ -54,6 +60,7 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [artistKey, setArtistKey] = useState("");
   const [artistInfos, setArtistInfos] = useState({ name: "", songs: [] });
+  const [modalActive, setModalActive] = useState(false);
 
   useEffect(() => {
     setArtistInfos({
@@ -241,6 +248,8 @@ export const AssetListsProvider = (props: { children: React.ReactNode }) => {
         setArtistKey,
         artistInfos,
         setArtistInfos,
+        modalActive,
+        setModalActive
       }}
     >
       {props.children}

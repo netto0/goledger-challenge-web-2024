@@ -3,7 +3,6 @@ import { AssetListsContext } from "../providers/assetLists";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { BsPlusCircle } from "react-icons/bs";
 import AddButton from "./addButton";
 
 export default function AllArtistsPage() {

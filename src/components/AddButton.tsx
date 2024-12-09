@@ -1,10 +1,15 @@
+import React from "react";
 import { BsPlusCircle } from "react-icons/bs";
+import { AssetListsContext } from "../providers/assetLists";
 
 export default function AddButton() {
+  const { modalActive, setModalActive } = React.useContext(AssetListsContext);
+
   const addFunc = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     console.log("Função Adicionar");
+    setModalActive("add")
   };
 
   return (
@@ -13,6 +18,7 @@ export default function AddButton() {
       onClick={(e) => addFunc(e)}
     >
       <BsPlusCircle />
+      {/* {modalActive ? "Sim" : "Não"} */}
     </button>
   );
 }
